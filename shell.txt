@@ -1,0 +1,69 @@
+python manage.py shell
+from news.models import *
+User.objects.create_user('Мария')
+User.objects.create_user('Александр')
+User.objects.create_user('Наталья')
+u1 = User.objects.get(pk=1)
+u2 = User.objects.get(pk=2)
+u3 = User.objects.get(pk=3)
+
+a1 = Author(user = u1)
+a1.save()
+a2 = Author(user = u2)
+a2.save()
+Category.objects.create(name_category='спорт')
+Category.objects.create(name_category='политика')
+Category.objects.create(name_category='образование')
+Category.objects.create(name_category='музыка')
+Category.objects.create(name_category='медицина')
+
+c1 = Category.objects.get(pk=4)
+Post.objects.create(author_post=a1,
+			title='Музыка обладает уникальной способностью вызывать эмоции. Некоторые мелодии могут успокаивать и расслаблять, другие — вдохновлять и заряжать энергией. Этот феномен объясняется влиянием музыки на мозг. Когда мы слушаем музыку, активируются различные участки мозга, включая те, которые отвечают за эмоции, память и мотивацию. Исследования показывают, что музыка может даже влиять на наше физическое состояние, снижая уровень стресса и улучшая настроен',
+			text='Музыка и Эмоции')
+Post.objects.create(author_post=a2,
+			title='Спорт: Дорога к Здоровью и Успеху',
+			text='Спорт играет важную роль в жизни каждого человека, способствуя не только физическому развитию, но и формированию характера. Регулярные физические упражнения укрепляют сердце, улучшают кровообращение, повышают выносливость и способствуют поддержанию здорового веса. Спорт также способствует улучшению психического здоровья. Физическая активность стимулирует выработку эндорфинов, известных как "гормоны счастья", которые снижают уровень стресса и улучшают настроение. Таким образом, спорт — это не просто хобби, а важный элемент здорового и успешного образа жизни. Независимо от возраста и уровня физической подготовки, каждый может найти вид спорта по душе и сделать шаг к лучшему здоровью и благополучию.')
+Post.objects.create(author_post=a1,
+			type='NE',
+			title='Новые Образовательные Программы: Переход К Школе Будущего',
+			text='В Министерстве образования объявили о запуске новых образовательных программ, направленных на подготовку школьников к вызовам XXI века. Эти инициативы, разработанные в сотрудничестве с ведущими образовательными учреждениями и технологическими компаниями, включают в себя углубленное изучение STEM-дисциплин (наука, технология, инженерия и математика), а также внедрение курсов по цифровой грамотности и кибербезопасности.')
+PostCategory.objects.create(post=Post.objects.get(pk=1), category=Category.objects.get(pk=4))
+PostCategory.objects.create(post=Post.objects.get(pk=1), category=Category.objects.get(pk=5))
+PostCategory.objects.create(post=Post.objects.get(pk=2), category=Category.objects.get(pk=1))
+PostCategory.objects.create(post=Post.objects.get(pk=2), category=Category.objects.get(pk=5))
+PostCategory.objects.create(post=Post.objects.get(pk=3), category=Category.objects.get(pk=2))
+
+Comment.objects.create(post=Post.objects.get(pk=3), user=u2, text='Эта новость – долгожданный шаг вперёд в развитии нашего образования!')
+Comment.objects.create(post=Post.objects.get(pk=2), user=u1, text='Полностью согласна с этой статьей! Спорт действительно оказывает огромное влияние на наше физическое и психическое здоровье.')
+Comment.objects.create(post=Post.objects.get(pk=1), user=u2, text='Музыка действительно имеет уникальную способность воздействовать на наши эмоции и физическое состояние.')
+
+Comment.objects.create(post=Post.objects.get(pk=3), user=u3, text='Хотя инициатива выглядит привлекательно, вызывает сомнения, как именно будет реализовано это нововведение. ')
+
+Post.objects.get(pk=1).like()
+Post.objects.get(pk=2).like()
+Post.objects.get(pk=3).like()
+Post.objects.get(pk=3).dislike()
+
+Comment.objects.get(pk=1).like()
+Comment.objects.get(pk=2).like()
+Comment.objects.get(pk=3).like()
+Comment.objects.get(pk=4).like()
+Comment.objects.get(pk=4).dislike()
+Comment.objects.get(pk=2).dislike()
+Comment.objects.get(pk=4).dislike()
+
+Author.objects.get(pk=1).update_rating()
+Author.objects.get(pk=2).update_rating()
+
+or1 = Author.objects.order_by('-rating')[0]
+User.objects.get(pk=or1.user_id)
+
+st1 = Post.objects.order_by('-rating')[0]
+
+st1.date_created
+User.objects.get(pk=Author.objects.get(pk=st1.author_post_id).user_id)
+st1.title
+st1.rating
+st1.preview()
+Comment.objects.filter(post_id=st1).values('date_created', 'user__username','rating', 'text')
