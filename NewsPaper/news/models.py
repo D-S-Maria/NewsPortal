@@ -27,9 +27,11 @@ class Author(models.Model):
         self.save()
 
 
-
 class Category(models.Model):
     name_category = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name_category
 
 
 class Post(models.Model):
