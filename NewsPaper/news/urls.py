@@ -10,6 +10,7 @@ urlpatterns = [
     path('<int:pk>/delete', NewsDelete.as_view(), name='news_delete'),
     path('create/', ArticlesCreated.as_view(), name='articles_create'),
     path('<int:pk>/edit/', ArticlesEdit.as_view(), name='articles_edit'),
-    path('<int:pk>/delete', ArticlesDelete.as_view(), name='articles_delete')
+    path('<int:pk>/delete', ArticlesDelete.as_view(), name='articles_delete'),
+    path('subscriptions/', subscriptions, name='subscriptions'),
 
 ]

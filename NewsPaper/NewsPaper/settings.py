@@ -141,7 +141,29 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
-
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "mariaskill"
+EMAIL_HOST_PASSWORD = "pogupjuuemrkxlah"
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = "mariaskill@yandex.ru"
+
+# отправка сообщений менеджерам
+SERVER_EMAIL = "mariaskill@yandex.ru"
+MANAGERS = (
+    ('mariya100190', 'mariya100190@yandex.ru'),
+    ('mariadzuina', 'mariadzuina@gmail.com')
+
+)
+EMAIL_SUBJECT_PREFIX = '[MANAGER]'
+
+ADMINS = (
+    ('mariya100190', 'mariya100190@yandex.ru'),
+)
