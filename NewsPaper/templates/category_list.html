@@ -22,7 +22,7 @@ Posts
         <small class="text-muted">(автор: {{ news.author }})</small> <br>
         <small class="fw-bold">категории:
             {% for category in news.category.all %}
-                <a href="{% url 'category_list' category.id %}"> {{ news.category }}</a>
+                <a href="{% url 'category_list' category.id %}"> {{ category }}</a>
             {% endfor %}
         </small>
         <p>{{ news.text | truncatechars:210 }}</p>
