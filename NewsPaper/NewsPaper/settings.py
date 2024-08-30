@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os.path
 from pathlib import Path
+import os
+import dotenv
+
+
+dotenv.load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,6 +48,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
+    'django_apscheduler',
 ]
 
 SITE_ID = 1
@@ -148,15 +154,15 @@ ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = "mariaskill"
-EMAIL_HOST_PASSWORD = "pogupjuuemrkxlah"
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
-DEFAULT_FROM_EMAIL = "mariaskill@yandex.ru"
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
 # отправка сообщений менеджерам
-SERVER_EMAIL = "mariaskill@yandex.ru"
+SERVER_EMAIL = os.getenv('SERVER_EMAIL')
 MANAGERS = (
     ('mariya100190', 'mariya100190@yandex.ru'),
     ('mariadzuina', 'mariadzuina@gmail.com')
@@ -167,3 +173,4 @@ EMAIL_SUBJECT_PREFIX = '[MANAGER]'
 ADMINS = (
     ('mariya100190', 'mariya100190@yandex.ru'),
 )
+SITE_URL = 'http://127.0.0.1:8000'
